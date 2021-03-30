@@ -18,8 +18,7 @@ class MainViewModel(application: Application) : ViewModel() {
     private var asteroidRepository = AsteroidRepository(database)
 
 
-    private val _pictureOfDay = MutableLiveData<PictureOfDay>()
-    val pictureOfDay: LiveData<PictureOfDay> get() = _pictureOfDay
+   val pictureOfDay= asteroidRepository.pictureOfDay
 
     //This list will be observed in RecyclerView
     private val _asteroidList = MutableLiveData<List<Asteroid>>()
