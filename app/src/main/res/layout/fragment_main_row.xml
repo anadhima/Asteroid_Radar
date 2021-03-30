@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        </data>
+
+        <variable
+            name="asteroid"
+            type="com.udacity.asteroidradar.domain.Asteroid" />
+    </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -26,6 +30,7 @@
                 style="@style/TextAppearance.Title"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:text="@{asteroid.codename}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +42,7 @@
                 style="@style/TextAppearance.Subtitle"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:text="@{asteroid.closeApproachDate}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/asteroid_codename"
                 app:layout_constraintTop_toBottomOf="@+id/asteroid_codename"
@@ -51,6 +57,7 @@
                 app:layout_constraintHorizontal_bias="0.958"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:statusIcon="@{asteroid.potentiallyHazardous}"
                 tools:srcCompat="@drawable/ic_status_potentially_hazardous" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

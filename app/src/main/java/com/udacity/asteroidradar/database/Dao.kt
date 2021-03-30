@@ -7,20 +7,17 @@ import androidx.room.*
 @Dao
 interface AsteroidDao {
 
-    @Query("select * from databaseasteroid ORDER BY date(closeApproachDate) DESC")
+    @Query("select * from databaseasteroid ORDER BY closeApproachDate DESC")
     fun getAllAsteroid(): LiveData<List<DatabaseAsteroid>>
 
 
-     //TODO (01) have an other check on this later
+    @Query("SELECT * FROM databaseasteroid where closeApproachDate between :startDay and :endDay order by closeApproachDate DESC")
+    fun getWeekAsteroid(startDay: String,endDay: String): LiveData<List<DatabaseAsteroid>>
 
+    @Query("SELECT * FROM databaseasteroid WHERE closeApproachDate = :today")
+    fun getTodayAsteroid (today:String): LiveData<List<DatabaseAsteroid>>
 
-    @Query("select * from databaseasteroid WHERE date(closeApproachDate) >  date('now', 'start of day', 'weekday 6', '-7 day') ORDER BY date(closeApproachDate) DESC")
-    fun getWeekAsteroid(): LiveData<List<DatabaseAsteroid>>
-
-    @Query("select * from databaseasteroid WHERE date(closeApproachDate) < date('now') ORDER BY date(closeApproachDate) DESC")
-    fun getTodayAsteroid(): LiveData<List<DatabaseAsteroid>>
-
-    @Query("DELETE FROM databaseasteroid WHERE date(closeApproachDate) < date('now')")
+    @Query("DELETE FROM databaseasteroid WHERE closeApproachDate < :today")
     fun deleteBeforeToday(today: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -33,7 +30,7 @@ interface AsteroidDao {
 interface PictureOfDayDao{
 
     @Query("select * from databasepictureofday")
-    fun getPictureOfDay(): LiveData<List<DatabasePictureOfDay>>
+    fun getPictureOfDay(): LiveData<DatabasePictureOfDay>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg pictureOfDay: DatabasePictureOfDay)
