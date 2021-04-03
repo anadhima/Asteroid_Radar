@@ -2,7 +2,6 @@ package com.udacity.asteroidradar.repository
 
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.api.*
 import com.udacity.asteroidradar.database.AsteroidDatabase
@@ -46,11 +45,6 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
             ) {
                 it.asDomainModel()
             }
-
-            /* (AsteroidFilter.SHOW_WEEK) -> Transformations.map(database.asteroidDao().getWeekAsteroid(
-                  getStartDateFormatted(), getEndDateFormatted())){
-                  it.asDomainModel()*/
-
             else -> {
                 Transformations.map(
                     database.asteroidDao().getWeekAsteroid(
@@ -66,40 +60,23 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     //Method to refresh Asteroid Offline Cache
     suspend fun refreshAsteroid() {
-        /* _status.value = Status.LOADING
-         withContext(Dispatchers.IO) {
-             try {*/
-
-        val asteroid = AsteroidApi.retrofitService.getAllAsteroids(
+        val asteroid = AsteroidApi.feedRetrofitService.getAllAsteroids(
             startDate = getStartDateFormatted(),
             endDate = getEndDateFormatted()
         ).await()
         val resultJSONObject = JSONObject(asteroid)
         val resultParsed = parseAsteroidsJsonResult(resultJSONObject)
         database.asteroidDao().insertAll(*resultParsed.asDatabaseModel())
-/*
-                _status.value = Status.DONE
-            } catch (e: Exception) {
-                _status.value = Status.ERROR
-            }
-        }*/
+
     }
 
     //Method to refresh PictureOfTheDay Offline Cache
     suspend fun refreshPictureOfDay() {
-        /*_status.value = Status.LOADING
-        withContext(Dispatchers.IO) {
-            try {*/
         val pictureOfDay = AsteroidApi.retrofitService.getImageOfDay().await()
         if (pictureOfDay.mediaType == "image") {
             database.pictureOfDayDao().clear()
             database.pictureOfDayDao().insertAll(pictureOfDay.asDatabaseModel())
-            /*_status.value = Status.DONE
-        }
-    } catch (e: Exception) {
-        _status.value = Status.ERROR
-    }
-}*/
+
         }
     }
 

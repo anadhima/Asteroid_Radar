@@ -7,6 +7,7 @@ import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.repository.AsteroidRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -35,22 +36,23 @@ class MainViewModel(application: Application) : ViewModel() {
 
 
     init {
+        updateFilter(AsteroidFilter.SHOW_ALL)
         refreshAsteroid()
         refreshPictureOfDay()
 
     }
 
+
     private fun refreshAsteroid() {
         _status.value = AsteroidApiStatus.LOADING
-        viewModelScope.launch {
+        viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 asteroidRepository.refreshAsteroid()
-                _status.value = AsteroidApiStatus.DONE
+                _status.postValue(AsteroidApiStatus.DONE)
             } catch (ex: Exception) {
-                _status.value = AsteroidApiStatus.ERROR
+                _status.postValue(AsteroidApiStatus.ERROR)
             }
         }
-
     }
 
     private fun refreshPictureOfDay() {

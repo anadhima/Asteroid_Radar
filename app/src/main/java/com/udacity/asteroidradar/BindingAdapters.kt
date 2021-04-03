@@ -76,7 +76,7 @@ fun asteroidApiStatus(progressBar: ProgressBar, status: AsteroidApiStatus?) {
             progressBar.visibility = View.VISIBLE
         }
         AsteroidApiStatus.ERROR -> {
-            progressBar.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }
         AsteroidApiStatus.DONE -> {
             progressBar.visibility = View.GONE
