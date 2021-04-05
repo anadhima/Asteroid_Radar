@@ -32,6 +32,7 @@ interface PictureOfDayDao{
     @Query("select * from databasepictureofday")
     fun getPictureOfDay(): LiveData<DatabasePictureOfDay>
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg pictureOfDay: DatabasePictureOfDay)
 

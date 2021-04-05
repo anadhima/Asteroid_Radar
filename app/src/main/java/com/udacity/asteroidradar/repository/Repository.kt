@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.api.*
 import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.database.DatabasePictureOfDay
 import com.udacity.asteroidradar.database.asDatabaseModel
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Asteroid
@@ -26,9 +27,14 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
 
     val pictureOfDay: LiveData<PictureOfDay> =
-        Transformations.map(database.pictureOfDayDao().getPictureOfDay()) {
+        Transformations.map(getPicture()) {
             it?.asDomainModel()
         }
+    private fun getPicture(): LiveData<DatabasePictureOfDay> {
+        return database.pictureOfDayDao().getPictureOfDay()
+    }
+
+
 
     // Apply the AsteroidFilter
     fun getAsteroidSelection(filter: AsteroidFilter): LiveData<List<Asteroid>> {

@@ -46,7 +46,7 @@ interface AsteroidApiService {
     ): Deferred<String>
 
     @GET("planetary/apod")
-    fun getImageOfDay(@Query("api_key") apiKey: String = BuildConfig.API_KEY ): Deferred<PictureOfDay>
+    fun getImageOfDay(@Query("api_key") apiKey: String = BuildConfig.API_KEY ):  Deferred<PictureOfDay>
 }
 
 

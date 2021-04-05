@@ -16,11 +16,16 @@ class RefreshAsteroidWork (appContext: Context, params: WorkerParameters):
     }
 
     override suspend fun doWork(): Result {
+
         val database = getDatabase(applicationContext)
         val repository = AsteroidRepository(database)
+
         return try {
+
             repository.refreshAsteroid()
+            repository.refreshPictureOfDay()
             repository.deleteBeforeToday()
+
             Result.success()
         } catch (e: HttpException) {
             Result.retry()

@@ -16,7 +16,7 @@ class AsteroidAdapter(private val onClickListener: OnClickListener) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
-        return AsteroidViewHolder(FragmentMainRowBinding.inflate(LayoutInflater.from(parent.context)))
+        return AsteroidViewHolder(FragmentMainRowBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
 

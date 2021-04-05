@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class AsteroidApplication : Application() {
+
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     override fun onCreate() {

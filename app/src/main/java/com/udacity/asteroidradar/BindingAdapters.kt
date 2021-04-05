@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.net.toUri
+
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -50,9 +52,8 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
 
 
 @BindingAdapter("imageUrl")
-fun imageUrl(imageView: ImageView, imgUrl: PictureOfDay?) {
+fun bindImageOfTheDay(imageView: ImageView, imgUrl: PictureOfDay?) {
     imgUrl?.let {
-//        val imgUri = it.toUri().buildUpon().scheme("https").build()
         Picasso.with(imageView.context)
             .load(imgUrl.url)
             .placeholder(R.drawable.placeholder_picture_of_day)
@@ -66,7 +67,6 @@ fun listData(recyclerView: RecyclerView, data: List<Asteroid>?) {
     val adapter = recyclerView.adapter as AsteroidAdapter
     adapter.submitList(data)
 }
-
 
 
 @BindingAdapter("asteroidApiStatus")
