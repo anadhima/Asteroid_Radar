@@ -9,15 +9,12 @@ import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.AsteroidFilter
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
-import com.udacity.asteroidradar.repository.AsteroidRepository
 
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-        }
+        val activity = requireNotNull(this.activity) { }
         ViewModelProvider(this, MainViewModelFactory(activity.application)).get(MainViewModel::class.java)
-
     }
 
 

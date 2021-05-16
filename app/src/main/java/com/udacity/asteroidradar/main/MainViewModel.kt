@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.api.AsteroidFilter
 import com.udacity.asteroidradar.database.getDatabase
@@ -61,12 +62,12 @@ class MainViewModel(application: Application) : ViewModel() {
 
     private fun refreshPictureOfDay() {
         _status.value = AsteroidApiStatus.LOADING
-        viewModelScope.launch {
+        viewModelScope.launch(context = Dispatchers.IO) {
             try {
                 asteroidRepository.refreshPictureOfDay()
                 _status.postValue(AsteroidApiStatus.DONE)
             } catch (ex: Exception) {
-
+                Log.d("Debug", "3 - Debugging  ${ex.localizedMessage}")
                 _status.value = AsteroidApiStatus.ERROR
             }
         }

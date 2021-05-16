@@ -36,6 +36,7 @@ interface PictureOfDayDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg pictureOfDay: DatabasePictureOfDay)
 
+
     @Query("DELETE FROM  databasepictureofday")
     fun clear()
 

@@ -1,8 +1,10 @@
 package com.udacity.asteroidradar.repository
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.udacity.asteroidradar.BuildConfig
 import com.udacity.asteroidradar.api.*
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.DatabasePictureOfDay
@@ -27,12 +29,9 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
 
     val pictureOfDay: LiveData<PictureOfDay> =
-        Transformations.map(getPicture()) {
+        Transformations.map(database.pictureOfDayDao().getPictureOfDay()) {
             it?.asDomainModel()
         }
-    private fun getPicture(): LiveData<DatabasePictureOfDay> {
-        return database.pictureOfDayDao().getPictureOfDay()
-    }
 
 
 
@@ -78,11 +77,10 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
     //Method to refresh PictureOfTheDay Offline Cache
     suspend fun refreshPictureOfDay() {
-        val pictureOfDay = AsteroidApi.retrofitService.getImageOfDay().await()
+        val pictureOfDay = AsteroidApi.retrofitService.getPictureOfDay().await()
         if (pictureOfDay.mediaType == "image") {
             database.pictureOfDayDao().clear()
             database.pictureOfDayDao().insertAll(pictureOfDay.asDatabaseModel())
-
         }
     }
 

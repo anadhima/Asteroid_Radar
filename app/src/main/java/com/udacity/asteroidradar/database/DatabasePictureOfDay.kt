@@ -15,6 +15,7 @@ data class DatabasePictureOfDay constructor(
     val url: String
 )
 
+
 //Extension function which converts from database objects to domain objects
 fun DatabasePictureOfDay.asDomainModel(): PictureOfDay {
     return PictureOfDay(
@@ -33,3 +34,4 @@ fun PictureOfDay.asDatabaseModel(): DatabasePictureOfDay {
         url = this.url
     )
 }
+

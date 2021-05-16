@@ -4,8 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.net.toUri
-
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -61,6 +59,7 @@ fun bindImageOfTheDay(imageView: ImageView, imgUrl: PictureOfDay?) {
             .into(imageView)
     }
 }
+
 
 @BindingAdapter("listData")
 fun listData(recyclerView: RecyclerView, data: List<Asteroid>?) {
